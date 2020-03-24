@@ -3,8 +3,6 @@ package apis
 import (
 	"context"
 	"fmt"
-	"log"
-	"os"
 	"time"
 
 	"github.com/beta/imgur-bot/bot/image"
@@ -24,15 +22,16 @@ func (api *API) Photo(m *telebot.Message) {
 		return
 	}
 
-	log.Printf("%d [Photo] fileID=%s", m.ID, m.Photo.FileID)
+	api.LogInfof(m, "[Photo] fileID=%s", m.Photo.FileID)
 
 	image, err := api.uploadImageFromFileID(m.Photo.FileID, m.Caption)
 	if err != nil {
-		log.New(os.Stderr, "", log.LstdFlags).Printf("%d [Photo] %v", m.ID, err)
+		api.LogErrorf(m, "[Photo] %v", err)
 		api.Error(m)
 		return
 	}
 
+	api.LogInfof(m, "[Photo] image (fileID=%s) uploaded to Imgur, url=%s", m.Photo.FileID, image.URL)
 	api.Reply(m, image.URL, telebot.NoPreview)
 }
 
@@ -43,15 +42,16 @@ func (api *API) File(m *telebot.Message) {
 		return
 	}
 
-	log.Printf("%d [File] fileID=%s", m.ID, m.Document.FileID)
+	api.LogInfof(m, "[File] fileID=%s", m.Document.FileID)
 
 	image, err := api.uploadImageFromFileID(m.Document.FileID, m.Caption)
 	if err != nil {
-		log.New(os.Stderr, "", log.LstdFlags).Printf("%d [File] %v", m.ID, err)
+		api.LogErrorf(m, "[File] %v", err)
 		api.Error(m)
 		return
 	}
 
+	api.LogInfof(m, "[File] image (fileID=%s) uploaded to Imgur, url=%s", m.Document.FileID, image.URL)
 	api.Reply(m, image.URL, telebot.NoPreview)
 }
 
@@ -63,7 +63,7 @@ func (api *API) uploadImageFromFileID(fileID, caption string) (*imgur.Image, err
 	}
 
 	// Upload to Imgur.
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	image, err := imgur.GetClient().UploadImage(ctx, imageURL, caption)
 	if err != nil {

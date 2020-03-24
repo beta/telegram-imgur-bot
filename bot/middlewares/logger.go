@@ -1,28 +1,33 @@
 package middlewares
 
 import (
-	"log"
 	"strings"
 
+	"github.com/beta/imgur-bot/bot/apis"
 	"github.com/beta/imgur-bot/bot/image"
+
 	"gopkg.in/tucnak/telebot.v2"
 )
 
 // Logger outputs logs for all messages received.
-func Logger(update *telebot.Update) bool {
-	if update == nil {
-		return false
-	}
+func Logger(bot *telebot.Bot) func(update *telebot.Update) bool {
+	return func(update *telebot.Update) bool {
+		if update == nil {
+			return false
+		}
 
-	switch {
-	case update.Message != nil:
-		m := update.Message
-		log.Printf("%d [Message] updateID=%d, messageID=%d, sender=%s, content=%s, hasImage=%v, hasImageFile=%v",
-			m.ID, update.ID, m.ID, getSenderName(m.Sender), m.Text, (m.Photo != nil),
-			(m.Document != nil && image.IsSupportedType(m.Document.MIME)))
-	}
+		api := apis.WithBot(bot)
 
-	return true
+		switch {
+		case update.Message != nil:
+			m := update.Message
+			api.LogInfof(m, "[Message] updateID=%d, messageID=%d, sender=%s, content=%s, caption=%s, hasImage=%v, hasImageFile=%v",
+				update.ID, m.ID, getSenderName(m.Sender), m.Text, m.Caption, (m.Photo != nil),
+				(m.Document != nil && image.IsSupportedType(m.Document.MIME)))
+		}
+
+		return true
+	}
 }
 
 func getSenderName(sender *telebot.User) string {

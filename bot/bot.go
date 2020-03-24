@@ -25,9 +25,9 @@ func Start() error {
 
 	// Init Telegram bot.
 	bot, err := telebot.NewBot(telebot.Settings{
-		Token:  apiKeys.TelegramBotToken,
-		Poller: telebot.NewMiddlewarePoller(&telebot.LongPoller{Timeout: 10 * time.Second}, middlewares.Logger),
+		Token: apiKeys.TelegramBotToken,
 	})
+	bot.Poller = telebot.NewMiddlewarePoller(&telebot.LongPoller{Timeout: 10 * time.Second}, middlewares.Logger(bot))
 	if err != nil {
 		return fmt.Errorf("failed to initialize Telegram bot, error: %v", err)
 	}
