@@ -17,8 +17,8 @@ func Logger(update *telebot.Update) bool {
 	switch {
 	case update.Message != nil:
 		m := update.Message
-		log.Printf("[Message] updateID=%d, messageID=%d, sender=%s, content=%s, hasImage=%v, hasImageFile=%v",
-			update.ID, m.ID, getSenderName(m.Sender), m.Text, (m.Photo != nil),
+		log.Printf("%d [Message] updateID=%d, messageID=%d, sender=%s, content=%s, hasImage=%v, hasImageFile=%v",
+			m.ID, update.ID, m.ID, getSenderName(m.Sender), m.Text, (m.Photo != nil),
 			(m.Document != nil && image.IsSupportedType(m.Document.MIME)))
 	}
 
