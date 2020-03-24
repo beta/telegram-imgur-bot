@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/beta/imgur-bot/bot/apis"
+	"github.com/beta/imgur-bot/bot/middlewares"
 
 	"gopkg.in/tucnak/telebot.v2"
 )
@@ -21,7 +22,7 @@ func Start() error {
 	// Init Telegram bot.
 	bot, err := telebot.NewBot(telebot.Settings{
 		Token:  tokens.Telegram,
-		Poller: &telebot.LongPoller{Timeout: 10 * time.Second},
+		Poller: telebot.NewMiddlewarePoller(&telebot.LongPoller{Timeout: 10 * time.Second}, middlewares.Logger),
 	})
 	if err != nil {
 		return fmt.Errorf("failed to initialize Telegram bot, error: %v", err)
