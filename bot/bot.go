@@ -75,4 +75,6 @@ func loadTokens() error {
 func route(bot *telebot.Bot) {
 	api := apis.WithBot(bot)
 	bot.Handle("/start", api.Hello)
+
+	bot.Handle(telebot.OnText, api.Unsupported)
 }
