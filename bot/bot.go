@@ -81,6 +81,7 @@ func route(bot *telebot.Bot) {
 	bot.Handle("/start", api.Hello)
 
 	bot.Handle(telebot.OnPhoto, api.Photo)
+	bot.Handle(telebot.OnDocument, api.File)
 
 	bot.Handle(telebot.OnText, api.Unsupported)
 }
