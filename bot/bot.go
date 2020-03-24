@@ -72,5 +72,6 @@ func loadTokens() error {
 }
 
 func route(bot *telebot.Bot) {
-	bot.Handle("/hello", apis.Hello(bot))
+	api := apis.WithBot(bot)
+	bot.Handle("/start", api.Hello)
 }
