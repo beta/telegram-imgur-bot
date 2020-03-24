@@ -1,1 +1,2 @@
-worker: imgur-bot
+web: web
+worker: bot

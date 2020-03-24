@@ -1,4 +1,4 @@
-package cmds
+package apis
 
 import (
 	"gopkg.in/tucnak/telebot.v2"

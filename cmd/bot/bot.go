@@ -7,14 +7,15 @@ import (
 	"strings"
 	"time"
 
-	"github.com/beta/imgur-bot/cmds"
+	"github.com/beta/imgur-bot/cmd/bot/apis"
+
 	"gopkg.in/tucnak/telebot.v2"
 )
 
 func main() {
 	// Load API tokens.
 	if err := loadTokens(); err != nil {
-		log.Fatalf("[main] %v", err)
+		log.Fatalf("[bot] %v", err)
 		return
 	}
 
@@ -24,7 +25,7 @@ func main() {
 		Poller: &telebot.LongPoller{Timeout: 10 * time.Second},
 	})
 	if err != nil {
-		log.Fatalf("[main] failed to initialize Telegram bot, error: %v", err)
+		log.Fatalf("[bot] failed to initialize Telegram bot, error: %v", err)
 		return
 	}
 	route(bot)
@@ -72,5 +73,5 @@ func loadTokens() error {
 }
 
 func route(bot *telebot.Bot) {
-	bot.Handle("/hello", cmds.Hello(bot))
+	bot.Handle("/hello", apis.Hello(bot))
 }
