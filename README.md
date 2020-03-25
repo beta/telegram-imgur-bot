@@ -1,6 +1,6 @@
 # Imgur Bot
 
-A Telegram bot for uploading images to Imgur.
+A Telegram bot which uploads images sent from you to Imgur and replies with direct links. Useful for sharing images, writing blogs, etc.
 
 ## Screenshot
 
@@ -34,6 +34,10 @@ $ TELEGRAM_BOT_TOKEN=[YOUR_BOT_TOKEN] IMGUR_CLIENT_ID=[YOUR_IMGUR_CLIENT_ID] go 
 - [ ] Supports logging in to Imgur to upload with users' own accounts
 - [ ] Supports specifying which album to upload to
 - [ ] Inline keyboard for deleting images from Imgur
+
+## Credits
+
+- [Telebot](https://github.com/tucnak/telebot)
 
 ## License
 

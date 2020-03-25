@@ -1,7 +1,7 @@
 package image
 
 const (
-	mimeJPEG = "image/JPEG"
+	mimeJPEG = "image/jpeg"
 	mimePNG  = "image/png"
 )
 
