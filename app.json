@@ -8,7 +8,7 @@
       "required": true
     },
     "IMGUR_CLIENT_ID": {
-      "description": "Imgue OAuth2 client ID. Refer: https://apidocs.imgur.com/",
+      "description": "Imgur OAuth2 client ID. Refer: https://apidocs.imgur.com/",
       "required": true
     }
   }

@@ -1,5 +1,8 @@
 module github.com/beta/imgur-bot
 
+// +heroku goVersion 1.14
+// +heroku install ./cmd/...
+
 go 1.14
 
 require (
