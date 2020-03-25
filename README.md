@@ -2,6 +2,11 @@
 
 A Telegram bot for uploading images to Imgur.
 
+## Screenshot
+
+<p align="center"><img src="screenshot.png?raw=true" alt="Screenshot" title="Screenshot" /></p>
+<p align="center"><sup>Image by Negative Space via <a href="https://www.pexels.com/photo/coffee-notebook-writing-computer-34601/" target="_blank">Pexels</a> (CC0 license)</sup></p>
+
 ## Prerequisites
 
 - Go >= 1.10
