@@ -1,0 +1,15 @@
+{
+  "name": "Imgur Bot",
+  "description": "A Telegram bot for uploading images to Imgur",
+  "repository": "https://github.com/beta/imgur-bot",
+  "env": {
+    "TELEGRAM_BOT_TOKEN": {
+      "description": "API token for your Telegram bot. Find yours from @BotFather.",
+      "required": true
+    },
+    "IMGUR_CLIENT_ID": {
+      "description": "Imgue OAuth2 client ID. Refer: https://apidocs.imgur.com/",
+      "required": true
+    }
+  }
+}
