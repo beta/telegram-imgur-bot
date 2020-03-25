@@ -3,8 +3,8 @@ package middlewares
 import (
 	"strings"
 
-	"github.com/beta/imgur-bot/bot/apis"
-	"github.com/beta/imgur-bot/bot/image"
+	"github.com/beta/telegram-imgur-bot/bot/apis"
+	"github.com/beta/telegram-imgur-bot/bot/image"
 
 	"gopkg.in/tucnak/telebot.v2"
 )

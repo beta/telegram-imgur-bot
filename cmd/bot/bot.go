@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/beta/imgur-bot/bot"
+	"github.com/beta/telegram-imgur-bot/bot"
 )
 
 func main() {

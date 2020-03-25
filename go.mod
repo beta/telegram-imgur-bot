@@ -1,4 +1,4 @@
-module github.com/beta/imgur-bot
+module github.com/beta/telegram-imgur-bot
 
 // +heroku goVersion 1.14
 // +heroku install ./cmd/...

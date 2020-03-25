@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/beta/imgur-bot/bot/image"
-	"github.com/beta/imgur-bot/bot/imgur"
+	"github.com/beta/telegram-imgur-bot/bot/image"
+	"github.com/beta/telegram-imgur-bot/bot/imgur"
 
 	"gopkg.in/tucnak/telebot.v2"
 )

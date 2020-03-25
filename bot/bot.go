@@ -6,9 +6,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/beta/imgur-bot/bot/apis"
-	"github.com/beta/imgur-bot/bot/imgur"
-	"github.com/beta/imgur-bot/bot/middlewares"
+	"github.com/beta/telegram-imgur-bot/bot/apis"
+	"github.com/beta/telegram-imgur-bot/bot/imgur"
+	"github.com/beta/telegram-imgur-bot/bot/middlewares"
 
 	"gopkg.in/tucnak/telebot.v2"
 )

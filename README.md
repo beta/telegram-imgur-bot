@@ -1,6 +1,6 @@
-# Imgur Bot
+# Telegram Imgur Bot
 
-[![Telegram: @beta_imgur_bot](https://img.shields.io/badge/Telegram-@beta__imgur__bot-%232CA5E0?logo=telegram "Telegram: @beta_imgur_bot")](https://t.me/beta_imgur_bot) [![Build status](https://img.shields.io/github/workflow/status/beta/imgur-bot/Go "Build status")](https://github.com/beta/imgur-bot/actions?query=workflow%3AGo)
+[![Telegram: @beta_imgur_bot](https://img.shields.io/badge/Telegram-@beta__imgur__bot-%232CA5E0?logo=telegram "Telegram: @beta_imgur_bot")](https://t.me/beta_imgur_bot) [![Build status](https://img.shields.io/github/workflow/status/beta/telegram-imgur-bot/Go "Build status")](https://github.com/beta/telegram-imgur-bot/actions?query=workflow%3AGo)
 
 A Telegram bot which uploads images sent from you to Imgur and replies with direct links. Useful for sharing images, writing blogs, etc.
 
@@ -18,7 +18,7 @@ A Telegram bot which uploads images sent from you to Imgur and replies with dire
 ## Getting started
 
 ```bash
-$ git clone https://github.com/beta/imgur-bot.git
+$ git clone https://github.com/beta/telegram-imgur-bot.git
 $ go get ./...
 $ TELEGRAM_BOT_TOKEN=[YOUR_BOT_TOKEN] IMGUR_CLIENT_ID=[YOUR_IMGUR_CLIENT_ID] go run cmd/bot/bot.go
 ```

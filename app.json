@@ -1,7 +1,7 @@
 {
   "name": "Imgur Bot",
   "description": "A Telegram bot for uploading images to Imgur",
-  "repository": "https://github.com/beta/imgur-bot",
+  "repository": "https://github.com/beta/telegram-imgur-bot",
   "env": {
     "TELEGRAM_BOT_TOKEN": {
       "description": "API token for your Telegram bot. Find yours from @BotFather.",
