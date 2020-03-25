@@ -20,10 +20,14 @@ func Logger(bot *telebot.Bot) func(update *telebot.Update) bool {
 
 		switch {
 		case update.Message != nil:
-			m := update.Message
-			api.LogInfof(m, "[Message] updateID=%d, messageID=%d, sender=%s, content=%s, caption=%s, hasImage=%v, hasImageFile=%v",
-				update.ID, m.ID, getSenderName(m.Sender), m.Text, m.Caption, (m.Photo != nil),
+			m := &apis.Message{Message: update.Message}
+			api.LogInfof(m, "[Message] updateID=%d, sender=%s, content=%s, caption=%s, hasImage=%v, hasImageFile=%v",
+				update.ID, getSenderName(m.Sender()), m.Text, m.Caption, (m.Photo != nil),
 				(m.Document != nil && image.IsSupportedType(m.Document.MIME)))
+
+		case update.Callback != nil:
+			cb := &apis.Callback{Callback: update.Callback}
+			api.LogInfof(cb, "[Callback] updateID=%d, sender=%s, messageID=%d, data=%s", update.ID, getSenderName(cb.Sender()), cb.MessageID, cb.Data)
 		}
 
 		return true
@@ -31,6 +35,10 @@ func Logger(bot *telebot.Bot) func(update *telebot.Update) bool {
 }
 
 func getSenderName(sender *telebot.User) string {
+	if sender == nil {
+		return ""
+	}
+
 	parts := make([]string, 0, 3)
 	if sender.FirstName != "" {
 		parts = append(parts, sender.FirstName)

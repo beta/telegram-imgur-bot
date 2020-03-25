@@ -12,7 +12,7 @@ import (
 )
 
 // Photo handles messages with photos (compressed images).
-func (api *API) Photo(m *telebot.Message) {
+func (api *API) Photo(m *Message) {
 	if m.Photo == nil {
 		api.Unsupported(m)
 		return
@@ -32,11 +32,11 @@ func (api *API) Photo(m *telebot.Message) {
 	}
 
 	api.LogInfof(m, "[Photo] image (fileID=%s) uploaded to Imgur, url=%s", m.Photo.FileID, image.URL)
-	api.Reply(m, image.URL, telebot.NoPreview)
+	api.Reply(m.Message, image.URL, telebot.NoPreview)
 }
 
 // File handles messages with image files (uncompressed).
-func (api *API) File(m *telebot.Message) {
+func (api *API) File(m *Message) {
 	if m.Document == nil || !image.IsSupportedType(m.Document.MIME) {
 		api.Unsupported(m)
 		return
@@ -52,7 +52,7 @@ func (api *API) File(m *telebot.Message) {
 	}
 
 	api.LogInfof(m, "[File] image (fileID=%s) uploaded to Imgur, url=%s", m.Document.FileID, image.URL)
-	api.Reply(m, image.URL, telebot.NoPreview)
+	api.Reply(m.Message, image.URL, telebot.NoPreview)
 }
 
 func (api *API) uploadImageFromFileID(fileID, caption string) (*imgur.Image, error) {

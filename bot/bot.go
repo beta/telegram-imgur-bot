@@ -78,10 +78,24 @@ func loadAPIKeys() error {
 
 func route(bot *telebot.Bot) {
 	api := apis.WithBot(bot)
-	bot.Handle("/start", api.Hello)
+	bot.Handle("/start", messageHandler(api.Hello))
 
-	bot.Handle(telebot.OnPhoto, api.Photo)
-	bot.Handle(telebot.OnDocument, api.File)
+	bot.Handle(telebot.OnPhoto, messageHandler(api.Photo))
+	bot.Handle(telebot.OnDocument, messageHandler(api.File))
 
-	bot.Handle(telebot.OnText, api.Unsupported)
+	bot.Handle(telebot.OnText, func(m *telebot.Message) {
+		api.Unsupported(&apis.Message{Message: m})
+	})
+}
+
+func messageHandler(handler func(*apis.Message)) func(*telebot.Message) {
+	return func(m *telebot.Message) {
+		handler(&apis.Message{Message: m})
+	}
+}
+
+func callbackHandler(handler func(*apis.Callback)) func(*telebot.Callback) {
+	return func(cb *telebot.Callback) {
+		handler(&apis.Callback{Callback: cb})
+	}
 }
