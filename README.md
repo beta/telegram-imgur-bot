@@ -12,6 +12,7 @@ A Telegram bot which uploads images sent from you to Imgur and replies with dire
 ## Prerequisites
 
 - Go >= 1.11
+- PostgreSQL >= 9.6, with `images` table created (see [bot/db/README.md](bot/db/README.md) for SQL)
 - A Telegram bot created from [BotFather](https://t.me/BotFather)
 - Imgur API client created following the guide at [apidocs.imgur.com](https://apidocs.imgur.com/)
 
@@ -20,7 +21,7 @@ A Telegram bot which uploads images sent from you to Imgur and replies with dire
 ```bash
 $ git clone https://github.com/beta/telegram-imgur-bot.git
 $ go get ./...
-$ TELEGRAM_BOT_TOKEN=[YOUR_BOT_TOKEN] IMGUR_CLIENT_ID=[YOUR_IMGUR_CLIENT_ID] go run cmd/bot/bot.go
+$ DATABASE_URL="postgres://[USER]:[PASS]@[ADDR]:[PORT]/[DATABASE]" TELEGRAM_BOT_TOKEN=[YOUR_BOT_TOKEN] IMGUR_CLIENT_ID=[YOUR_IMGUR_CLIENT_ID] go run cmd/bot/bot.go
 ```
 
 ## Deploying to Heroku
@@ -33,9 +34,10 @@ $ TELEGRAM_BOT_TOKEN=[YOUR_BOT_TOKEN] IMGUR_CLIENT_ID=[YOUR_IMGUR_CLIENT_ID] go 
 
 ## To-dos
 
-- [ ] Support logging in to Imgur to upload with users' own accounts
-- [ ] Support specifying which album to upload to
-- [ ] Inline keyboard for deleting images from Imgur
+- [ ] ~~Support logging in to Imgur to upload with users' own accounts~~
+- [ ] ~~Support specifying which album to upload to~~
+- [x] Inline keyboard for deleting images from Imgur
+- [ ] Generate Markdown and HTML snippets for uploaded images
 
 ## Credits
 

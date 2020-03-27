@@ -3,6 +3,10 @@
   "description": "A Telegram bot for uploading images to Imgur",
   "repository": "https://github.com/beta/telegram-imgur-bot",
   "env": {
+    "DATABASE_URL": {
+      "description": "DSN for connecting to PostgreSQL database, in the format of \"postgres://[USER]:[PASS]@[ADDR]:[PORT]/[DATABASE]\".",
+      "required": true
+    },
     "TELEGRAM_BOT_TOKEN": {
       "description": "API token for your Telegram bot. Find yours from @BotFather.",
       "required": true
