@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"github.com/beta/telegram-imgur-bot/bot/apis"
-	"github.com/beta/telegram-imgur-bot/bot/image"
+	"github.com/beta/telegram-imgur-bot/bot/data"
 
 	"gopkg.in/tucnak/telebot.v2"
 )
@@ -21,12 +21,20 @@ func Logger(bot *telebot.Bot) func(update *telebot.Update) bool {
 		switch {
 		case update.Message != nil:
 			m := &apis.Message{Message: update.Message}
+			if m.Sender() == nil {
+				api.LogErrorf(m, "[Message] updateID=%d, sender is nil")
+				return false
+			}
 			api.LogInfof(m, "[Message] updateID=%d, sender=%s, content=%s, caption=%s, hasImage=%v, hasImageFile=%v",
 				update.ID, getSenderName(m.Sender()), m.Text, m.Caption, (m.Photo != nil),
-				(m.Document != nil && image.IsSupportedType(m.Document.MIME)))
+				(m.Document != nil && data.IsSupportedImageType(m.Document.MIME)))
 
 		case update.Callback != nil:
 			cb := &apis.Callback{Callback: update.Callback}
+			if cb.Sender() == nil {
+				api.LogErrorf(cb, "[Callback] updateID=%d, sender is nil")
+				return false
+			}
 			api.LogInfof(cb, "[Callback] updateID=%d, sender=%s, messageID=%d, data=%s", update.ID, getSenderName(cb.Sender()), cb.MessageID, cb.Data)
 		}
 

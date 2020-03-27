@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/beta/telegram-imgur-bot/bot/apis"
+	"github.com/beta/telegram-imgur-bot/bot/db"
 	"github.com/beta/telegram-imgur-bot/bot/imgur"
 	"github.com/beta/telegram-imgur-bot/bot/middlewares"
 
@@ -15,17 +16,22 @@ import (
 
 // Start creates and starts the Imgur Telegram bot.
 func Start() error {
-	// Load API keys.
-	if err := loadAPIKeys(); err != nil {
+	// Load env vars.
+	if err := loadEnvs(); err != nil {
 		return err
 	}
 
+	// Init DB.
+	if err := db.Init(configs.DSN); err != nil {
+		return fmt.Errorf("failed to initialize DB connection, error: %v", err)
+	}
+
 	// Init Imgur client.
-	imgur.Init(apiKeys.ImgurClientID)
+	imgur.Init(configs.ImgurClientID)
 
 	// Init Telegram bot.
 	bot, err := telebot.NewBot(telebot.Settings{
-		Token: apiKeys.TelegramBotToken,
+		Token: configs.TelegramBotToken,
 	})
 	bot.Poller = telebot.NewMiddlewarePoller(&telebot.LongPoller{Timeout: 10 * time.Second}, middlewares.Logger(bot))
 	if err != nil {
@@ -38,41 +44,49 @@ func Start() error {
 	return nil
 }
 
-var apiKeys struct {
+var configs struct {
+	DSN              string
 	TelegramBotToken string
 	ImgurClientID    string
 }
 
 const (
+	envDatabase         = "DATABASE"
 	envTelegramBotToken = "TELEGRAM_BOT_TOKEN"
 	envImgurClientID    = "IMGUR_CLIENT_ID"
 )
 
-func loadAPIKeys() error {
-	// Internal func for reading 1 token from env var.
-	var loadToken = func(envVar string) (string, error) {
-		token, ok := os.LookupEnv(envVar)
-		token = strings.TrimSpace(token)
-		if !ok || len(token) <= 0 {
+func loadEnvs() error {
+	// Internal func for reading 1 env var.
+	var loadEnv = func(envVar string) (string, error) {
+		val, ok := os.LookupEnv(envVar)
+		val = strings.TrimSpace(val)
+		if !ok || len(val) <= 0 {
 			return "", fmt.Errorf("environment variable %s is not properly set", envVar)
 		}
-		return token, nil
+		return val, nil
 	}
 
+	// Read DSN.
+	dsn, err := loadEnv(envDatabase)
+	if err != nil {
+		return err
+	}
 	// Read Telegram API token.
-	telegramBotToken, err := loadToken(envTelegramBotToken)
+	telegramBotToken, err := loadEnv(envTelegramBotToken)
 	if err != nil {
 		return err
 	}
 	// Read Imgur API token.
-	imgurClientID, err := loadToken(envImgurClientID)
+	imgurClientID, err := loadEnv(envImgurClientID)
 	if err != nil {
 		return err
 	}
 
-	// Save to apiKeys.
-	apiKeys.TelegramBotToken = telegramBotToken
-	apiKeys.ImgurClientID = imgurClientID
+	// Save to configs.
+	configs.DSN = dsn
+	configs.TelegramBotToken = telegramBotToken
+	configs.ImgurClientID = imgurClientID
 	return nil
 }
 
