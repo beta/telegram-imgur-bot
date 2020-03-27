@@ -51,7 +51,7 @@ var configs struct {
 }
 
 const (
-	envDatabase         = "DATABASE"
+	envDatabaseURL      = "DATABASE_URL"
 	envTelegramBotToken = "TELEGRAM_BOT_TOKEN"
 	envImgurClientID    = "IMGUR_CLIENT_ID"
 )
@@ -68,7 +68,7 @@ func loadEnvs() error {
 	}
 
 	// Read DSN.
-	dsn, err := loadEnv(envDatabase)
+	dsn, err := loadEnv(envDatabaseURL)
 	if err != nil {
 		return err
 	}
