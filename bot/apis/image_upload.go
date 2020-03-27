@@ -33,7 +33,9 @@ func (api *API) Photo(m *Message) {
 	}
 
 	api.LogInfof(m, "[Photo] image (fileID=%s) uploaded to Imgur, DB ID=%d, url=%s", m.Photo.FileID, image.ID, image.ImgurURL)
-	api.Reply(m.Message, image.ImgurURL, telebot.NoPreview)
+	api.Reply(m.Message, image.ImgurURL, telebot.NoPreview, &telebot.ReplyMarkup{
+		InlineKeyboard: api.generateImageInlineKeyboard(image),
+	})
 }
 
 // File handles messages with image files (uncompressed).
@@ -53,7 +55,9 @@ func (api *API) File(m *Message) {
 	}
 
 	api.LogInfof(m, "[File] image (fileID=%s) uploaded to Imgur, DB ID=%d, url=%s", m.Document.FileID, image.ID, image.ImgurURL)
-	api.Reply(m.Message, image.ImgurURL, telebot.NoPreview)
+	api.Reply(m.Message, image.ImgurURL, telebot.NoPreview, &telebot.ReplyMarkup{
+		InlineKeyboard: api.generateImageInlineKeyboard(image),
+	})
 }
 
 func (api *API) uploadTelegramImageFile(m *Message, file telebot.File) (*data.Image, error) {
@@ -83,4 +87,17 @@ func (api *API) uploadTelegramImageFile(m *Message, file telebot.File) (*data.Im
 	}
 
 	return inserted, nil
+}
+
+func (api *API) generateImageInlineKeyboard(image *data.Image) [][]telebot.InlineButton {
+	// Delete image button.
+	deleteButton := telebot.InlineButton{
+		Unique: actionDeleteImage,
+		Text:   "🗑 Delete",
+		Data:   fmt.Sprint(image.ID),
+	}
+
+	return [][]telebot.InlineButton{
+		{deleteButton},
+	}
 }

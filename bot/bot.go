@@ -96,6 +96,7 @@ func route(bot *telebot.Bot) {
 
 	bot.Handle(telebot.OnPhoto, messageHandler(api.Photo))
 	bot.Handle(telebot.OnDocument, messageHandler(api.File))
+	bot.Handle(telebot.OnCallback, callbackHandler(api.Callback))
 
 	bot.Handle(telebot.OnText, func(m *telebot.Message) {
 		api.Unsupported(&apis.Message{Message: m})

@@ -38,3 +38,14 @@ func (*image) Query(id int64) (*data.Image, error) {
 	}
 	return image, nil
 }
+
+// Delete deletes an image.
+func (*image) Delete(id int64) error {
+	const query = `DELETE FROM "images" WHERE "id" = $1`
+
+	if _, err := db.Exec(query, id); err != nil {
+		return err
+	}
+
+	return nil
+}
