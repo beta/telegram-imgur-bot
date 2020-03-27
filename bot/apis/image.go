@@ -32,7 +32,7 @@ func (api *API) Photo(m *Message) {
 		return
 	}
 
-	api.LogInfof(m, "[Photo] image (fileID=%s) uploaded to Imgur, url=%s", m.Photo.FileID, image.ImgurURL)
+	api.LogInfof(m, "[Photo] image (fileID=%s) uploaded to Imgur, DB ID=%d, url=%s", m.Photo.FileID, image.ID, image.ImgurURL)
 	api.Reply(m.Message, image.ImgurURL, telebot.NoPreview)
 }
 
@@ -52,7 +52,7 @@ func (api *API) File(m *Message) {
 		return
 	}
 
-	api.LogInfof(m, "[File] image (fileID=%s) uploaded to Imgur, url=%s", m.Document.FileID, image.ImgurURL)
+	api.LogInfof(m, "[File] image (fileID=%s) uploaded to Imgur, DB ID=%d, url=%s", m.Document.FileID, image.ID, image.ImgurURL)
 	api.Reply(m.Message, image.ImgurURL, telebot.NoPreview)
 }
 
